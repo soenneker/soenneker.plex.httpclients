@@ -1,20 +1,19 @@
 using Soenneker.Plex.HttpClients.Abstract;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Plex.HttpClients.Tests;
 
-[Collection("Collection")]
-public sealed class PlexOpenApiHttpClientTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class PlexOpenApiHttpClientTests : HostedUnitTest
 {
     private readonly IPlexOpenApiHttpClient _httpclient;
 
-    public PlexOpenApiHttpClientTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public PlexOpenApiHttpClientTests(Host host) : base(host)
     {
         _httpclient = Resolve<IPlexOpenApiHttpClient>(true);
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
