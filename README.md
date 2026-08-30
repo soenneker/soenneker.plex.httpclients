@@ -55,6 +55,6 @@ HttpResponseMessage response = await httpClient.GetAsync("/identity", cancellati
 response.EnsureSuccessStatusCode();
 ```
 
-The wrapper may be scoped or singleton, but the underlying client and transport are cached process-wide. Disposing a scoped wrapper does not destroy the shared client.
+The wrapper may be scoped or singleton, but the underlying client and transport are cached process-wide. Disposing a scoped wrapper does not destroy the shared client. The token is attached only when a request has the same scheme, host, and port as `ClientBaseUrl`.
 
 Automatic redirects are disabled because Plex's token header must not be forwarded to another origin. Handle an expected redirect explicitly after validating its destination.

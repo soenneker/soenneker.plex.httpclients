@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,10 +38,7 @@ public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
             {
                 BaseAddress = baseAddress,
                 AllowAutoRedirect = false,
-                DefaultRequestHeaders = new Dictionary<string, string>
-                {
-                    {authHeaderName, authHeaderValue},
-                }
+                DelegatingHandlerFactories = [() => new PlexAuthenticationHandler(authHeaderName, authHeaderValue, baseAddress)]
             };
         }, cancellationToken);
     }
