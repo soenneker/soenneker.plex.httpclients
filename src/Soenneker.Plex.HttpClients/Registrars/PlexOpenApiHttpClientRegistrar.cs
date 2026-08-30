@@ -11,7 +11,7 @@ namespace Soenneker.Plex.HttpClients.Registrars;
 public static class PlexOpenApiHttpClientRegistrar
 {
     /// <summary>
-    /// Adds <see cref="PlexOpenApiHttpClient"/> as a singleton service. <para/>
+    /// Adds the Plex HTTP client wrapper as a singleton service.
     /// </summary>
     /// <param name="services">Service collection that receives the registration.</param>
     /// <returns>The same service collection, so additional registrations can be chained.</returns>
@@ -24,7 +24,7 @@ public static class PlexOpenApiHttpClientRegistrar
     }
 
     /// <summary>
-    /// Adds <see cref="PlexOpenApiHttpClient"/> as a scoped service. <para/>
+    /// Adds the Plex HTTP client wrapper as a scoped service while retaining the process-wide cached transport.
     /// </summary>
     /// <param name="services">Service collection that receives the registration.</param>
     /// <returns>The same service collection, so additional registrations can be chained.</returns>

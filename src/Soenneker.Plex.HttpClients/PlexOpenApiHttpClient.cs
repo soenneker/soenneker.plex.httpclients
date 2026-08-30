@@ -11,7 +11,6 @@ using Soenneker.Utils.HttpClientCache.Abstract;
 
 namespace Soenneker.Plex.HttpClients;
 
-/// <inheritdoc cref="IPlexOpenApiHttpClient"/>
 public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
 {
     private readonly IHttpClientCache _httpClientCache;
@@ -29,6 +28,8 @@ public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
     {
         return _httpClientCache.Get(nameof(PlexOpenApiHttpClient), (config: _config, baseUrl: _config["Plex:ClientBaseUrl"] ?? _prodBaseUrl), static state =>
         {
+            var baseAddress = new Uri(state.baseUrl, UriKind.Absolute);
+
             var apiKey = state.config.GetValueStrict<string>("Plex:ApiKey");
             string authHeaderName = state.config["Plex:AuthHeaderName"] ?? "X-Plex-Token";
             string authHeaderValueTemplate = state.config["Plex:AuthHeaderValueTemplate"] ?? "{token}";
@@ -36,7 +37,8 @@ public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
 
             return new HttpClientOptions
             {
-                BaseAddress = new Uri(state.baseUrl),
+                BaseAddress = baseAddress,
+                AllowAutoRedirect = false,
                 DefaultRequestHeaders = new Dictionary<string, string>
                 {
                     {authHeaderName, authHeaderValue},
@@ -45,20 +47,12 @@ public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
         }, cancellationToken);
     }
 
-    /// <summary>
-    /// Releases resources used by the current instance.
-    /// </summary>
     public void Dispose()
     {
-        _httpClientCache.RemoveSync(nameof(PlexOpenApiHttpClient));
     }
 
-    /// <summary>
-    /// Asynchronously releases resources used by the current instance.
-    /// </summary>
-    /// <returns>A task that represents the asynchronous operation.</returns>
     public ValueTask DisposeAsync()
     {
-        return _httpClientCache.Remove(nameof(PlexOpenApiHttpClient));
+        return ValueTask.CompletedTask;
     }
 }

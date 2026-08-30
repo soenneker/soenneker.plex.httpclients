@@ -6,14 +6,14 @@ using System.Threading;
 namespace Soenneker.Plex.HttpClients.Abstract;
 
 /// <summary>
-/// A .NET thread-safe singleton HttpClient for 
+/// Provides the process-wide cached HTTP client used to call a Plex Media Server API.
 /// </summary>
 public interface IPlexOpenApiHttpClient: IDisposable, IAsyncDisposable
 {
     /// <summary>
-    /// Returns the configured HTTP client used by the Plex OpenAPI HTTP Client.
+    /// Gets the cached client configured with the Plex server base address and token header.
     /// </summary>
     /// <param name="cancellationToken">Token used to cancel the operation.</param>
-    /// <returns>A task whose result is the requested HTTP client.</returns>
+    /// <returns>The shared Plex HTTP client.</returns>
     ValueTask<HttpClient> Get(CancellationToken cancellationToken = default);
 }
