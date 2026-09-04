@@ -10,6 +10,7 @@ using Soenneker.Utils.HttpClientCache.Abstract;
 
 namespace Soenneker.Plex.HttpClients;
 
+/// <inheritdoc cref="IPlexOpenApiHttpClient" />
 public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
 {
     private readonly IHttpClientCache _httpClientCache;
