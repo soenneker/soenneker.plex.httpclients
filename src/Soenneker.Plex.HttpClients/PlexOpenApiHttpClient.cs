@@ -30,7 +30,7 @@ public sealed class PlexOpenApiHttpClient : IPlexOpenApiHttpClient
         {
             var baseAddress = new Uri(state.baseUrl, UriKind.Absolute);
 
-            var apiKey = state.config.GetValueStrict<string>("Plex:ApiKey");
+            var apiKey = state.config.GetStringStrict("Plex:ApiKey");
             string authHeaderName = state.config["Plex:AuthHeaderName"] ?? "X-Plex-Token";
             string authHeaderValueTemplate = state.config["Plex:AuthHeaderValueTemplate"] ?? "{token}";
             string authHeaderValue = authHeaderValueTemplate.Replace("{token}", apiKey, StringComparison.Ordinal);
